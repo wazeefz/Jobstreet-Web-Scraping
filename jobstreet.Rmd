@@ -1,0 +1,116 @@
+---
+title: "jobstreet"
+output:
+  html_document:
+    df_print: paged
+---
+
+  
+
+```{r}
+library(rvest)
+library(RSelenium)
+library(tidyverse)
+library(data.table)
+
+date = gsub("-", "_", Sys.Date())
+
+url = "https://www.jobstreet.com.my/en/job-search/job-vacancy.php?sort=createdAt"
+
+driver = rsDriver(port = as.integer(sample(1000:10000, 1)), browser = "chrome", chromever = "105.0.5195.19")
+
+remDr = driver[["client"]]
+
+remDr$navigate(url)
+
+Sys.sleep(.5)
+```
+
+
+```{r getting job links}
+joblinks = vector()
+
+
+for(i in 1:2){
+
+  linkstart = ("https://www.jobstreet.com.my/en/job-search/job-vacancy/")
+  linknumber = i
+  linkend = ("/?sort=createdAt")
+  
+  pagelink = paste0(linkstart,linknumber,linkend)
+  
+  #cat(pagelink,"\n")
+  
+  remDr$navigate(pagelink)
+  
+  Sys.sleep(.1)
+  
+  job_link = read_html(remDr$getPageSource()[[1]]) %>%
+    html_nodes("a._1hr6tkx5._1hr6tkx8._1hr6tkxb.sx2jih0.sx2jihf.zcydq8h") %>% html_attr("href")
+  
+  job_link = grep("/job/", job_link, value = T)
+  # 
+  # job_link = job_link[!grepl("job-search", job_link)]
+  
+  # class(job_link)
+  # cat(job_link)
+  # length(job_link)
+  
+  comjoblink = paste0("https://www.jobstreet.com.my",job_link)
+  
+  # class(comjoblink)
+  # cat(comjoblink)
+  # length(comjoblink)
+  
+  # comjoblink = data.frame(LINK  = comjoblink)
+  
+  # class(comjoblink)
+  # nrow(comjoblink)
+  
+  joblinks = append(joblinks,comjoblink)
+  
+   # class(joblinks)
+  # nrow(joblinks)
+  #class(joblinks)
+   
+   # joblinks = na.omit(joblinks)
+  
+  #joblinks = joblinks[!is.na(joblinks)]
+  # joblinks = data.frame(joblinks)
+  # class(joblinks)
+  # length(joblinks)
+   
+   #joblinks = joblinks[!duplicated(joblinks$LINK),]
+  # joblinks = data.frame(LINK = joblinks)
+  
+  joblinks = joblinks[!duplicated(joblinks)]
+  # joblinks = data.frame(joblinks)
+   #class(joblinks)
+  # length(joblinks)
+   
+  cat("Iteration = ",i,"\n")
+  
+  
+  
+
+}
+
+# fwrite(as.data.frame(joblinks), paste0("//10.13.10.22/dataSandbox/scraping/misc/jobstreet/links/jobstreet_links_", date, ".csv"))
+
+# joblinks = fread(paste0("//10.13.10.22/dataSandbox/scraping/misc/jobstreet/links/jobstreet_links_", date, ".csv"))
+
+```
+
+
+
+```{r}
+
+```
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
