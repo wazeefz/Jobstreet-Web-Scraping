@@ -1,16 +1,22 @@
 #Title : JobStreet Web Scraping
 
 # Script by Wazeef
-library(rvest)
-library(RSelenium)
-library(tidyverse)
-library(data.table)
+install.packages("pacman")
+Packages <- c("rvest","RSelenium","tidyverse","data.table","RPostgreSQL")
+Packages %in% loadedNamespaces() # check if the packages are loaded
+# [1] FALSE FALSE
+
+pacman::p_load(Packages, character.only = TRUE)
+
+Packages %in% loadedNamespaces()
+
+
 
 date = gsub("-", "_", Sys.Date())
 
 url = "https://www.jobstreet.com.my/en/job-search/job-vacancy.php?sort=createdAt"
 
-driver = rsDriver(port = as.integer(sample(1000:10000, 1)), browser = "chrome", chromever = "105.0.5195.19")
+driver = rsDriver(port = as.integer(sample(1000:10000, 1)), browser = "chrome", chromever = "106.0.5249.61")
 
 remDr = driver[["client"]]
 
@@ -40,7 +46,7 @@ Sys.sleep(.5)
 
 joblinks = vector()
 
-for(i in 1:2086){
+for(i in 1:100){
 
   linkstart = ("https://www.jobstreet.com.my/en/job-search/job-vacancy/")
   linknumber = i
@@ -104,23 +110,26 @@ for(i in 1:2086){
 
 }
 
-fwrite(as.data.frame(joblinks), paste0("//10.13.10.22/dataSandbox/scraping/misc/jobstreet/links/jobstreet_links_", date, ".csv"))
+#backup
+# fwrite(as.data.frame(joblinks), paste0("//10.13.10.22/dataSandbox/scraping/misc/jobstreet/links/jobstreet_links_", date, ".csv"))
+
 
 # joblinks = fread(paste0("//10.13.10.22/dataSandbox/scraping/misc/jobstreet/links/jobstreet_links_", date, ".csv"))
 
 ######################################################################################################################################################
 
-for(i in 30:40){
-  
-  remDr$navigate(joblinks[i])
-  
-}
+# for(i in 30:40){
+#   
+#   remDr$navigate(joblinks[i])
+#   
+# }
 
 ######################################################################################################################################################
 
 jobdata = data.frame()
 
-for(i in 452:length(joblinks)){
+# for(i in 1:length(joblinks)){
+for(i in 1:100){
   remDr$navigate(joblinks[i])
   
   Sys.sleep(.2)
@@ -265,10 +274,79 @@ for(i in 452:length(joblinks)){
   
   jobdata = rbind(jobdata, df)
   
+  
+  
   cat("Iteration = ",i,"\n")
   
   
+  values <- paste( " jobdata[  , c(",
+                   paste( names(jobdata),collapse=",") ,
+                   ")] ", collapse="" )
+  print(values)
+
+  cmd <- paste("insert into description values ", values)
+
+  print(cmd)
+  
+  dbSendQuery(con, cmd, as.is=TRUE)
+
 }
+
+
+values <- paste( " jobdata[  , c(",
+                 paste( names(jobdata),collapse=",") ,
+                 ")] ", collapse="" )
+print(values)
+
+cmd <- paste("insert into description values ", values)
+
+print(cmd)
+
+dbSendQuery(con, cmd, as.is=TRUE)
+
+dbListTables(con)
+
+
+
+pw <- {
+  "wtgwrgergerg3354"
+}
+
+# loads the PostgreSQL driver
+drv <- dbDriver("PostgreSQL")
+# creates a connection to the postgres database
+# note that "con" will be used later in each connection to the database
+con <- dbConnect(drv, dbname = "jobstreet",
+                 host = "10.13.11.18", port = 5432,
+                 user = "docker", password = pw)
+rm(pw) # removes the password
+
+# check for the cartable
+dbExistsTable(con, "public")
+
+values <- paste( " jobdata[  , c(", 
+                 paste( names(jobdata),collapse=",") ,
+                 ")] ", collapse="" ) 
+
+cmd <- paste("insert into descr values ", values)
+
+result <- sqlQuery(con, cmd, as.is=TRUE)
+
+
+# df_postgres <- dbGetQuery(con, "SELECT * from jupem_point")
+
+queryBuilding <- paste('SELECT * from public') 
+
+buildingFootprint <- st_read(con, query = queryBuilding)
+
+dbListTables(con) 
+
+dbWriteTable(con, name="description", value=jobdata)
+
+dbReadTable(con, 'job-description')
+
+dbSendQuery(connec, "INSERT INTO Employees VALUES(1,'Aakash')")
+
 
 fwrite(as.data.frame(jobdata), paste0("//10.13.10.22/dataSandbox/scraping/misc/jobstreet/jobstreet_jobdataraw_", date, ".csv"))
 
