@@ -343,6 +343,10 @@ dbListTables(con)
 
 dbWriteTable(con, name="description", value=jobdata)
 
+# https://stackoverflow.com/questions/47543247/how-to-append-update-a-row-from-a-data-frame-to-a-table-in-postgresql-db-table-t
+dbWriteTable(con, "mytable", df, append = TRUE, row.names = FALSE)
+
+
 dbReadTable(con, 'job-description')
 
 dbSendQuery(connec, "INSERT INTO Employees VALUES(1,'Aakash')")
