@@ -6,6 +6,7 @@ pages:
   image: rocker/r-ver:4.2
   before_script:
     - apt-get update && apt-get install libpq5 -y  
+    - Rscript -e 'install.packages(c("rvest","RSelenium","RPostgreSQL"))'
 
   script:   
     - Rscript jobstreet-web-scraping.R 
