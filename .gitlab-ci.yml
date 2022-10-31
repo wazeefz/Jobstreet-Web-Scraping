@@ -1,7 +1,7 @@
 scrape:
   image: rocker/r-ver:4.2
   before_script:
-    - apt-get update && apt-get install openjdk-8-jdk google-chrome-stable -y
+    - apt-get update && apt-get install openjdk-8-jdk google-chrome -y
     - Rscript -e "install.packages(c(\"rvest\",\"RSelenium\",\"tidyverse\",\"data.table\",\"RPostgreSQL\"))"
   script: 
     - Rscript jobstreet-web-scraping.R
