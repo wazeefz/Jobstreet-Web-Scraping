@@ -42,6 +42,22 @@ Sys.sleep(.5)
 # length(links)
 
 
+
+
+pw <- {
+  "wtgwrgergerg3354"
+}
+
+# loads the PostgreSQL driver
+drv <- dbDriver("PostgreSQL")
+# creates a connection to the postgres database
+# note that "con" will be used later in each connection to the database
+con <- dbConnect(drv, dbname = "jobstreet",
+                 host = "10.13.11.18", port = 5432,
+                 user = "docker", password = pw)
+rm(pw) # removes the password 
+
+
 ######################################################################################################################################################
 
 joblinks = vector()
@@ -277,79 +293,12 @@ for(i in 1:100){
   
   
   cat("Iteration = ",i,"\n")
-  
-  
-  values <- paste( " jobdata[  , c(",
-                   paste( names(jobdata),collapse=",") ,
-                   ")] ", collapse="" )
-  print(values)
 
-  cmd <- paste("insert into description values ", values)
-
-  print(cmd)
-  
-  dbSendQuery(con, cmd, as.is=TRUE)
 
 }
-
-
-values <- paste( " jobdata[  , c(",
-                 paste( names(jobdata),collapse=",") ,
-                 ")] ", collapse="" )
-print(values)
-
-cmd <- paste("insert into description values ", values)
-
-print(cmd)
-
-dbSendQuery(con, cmd, as.is=TRUE)
-
-dbListTables(con)
-
-
-
-pw <- {
-  "wtgwrgergerg3354"
-}
-
-# loads the PostgreSQL driver
-drv <- dbDriver("PostgreSQL")
-# creates a connection to the postgres database
-# note that "con" will be used later in each connection to the database
-con <- dbConnect(drv, dbname = "jobstreet",
-                 host = "10.13.11.18", port = 5432,
-                 user = "docker", password = pw)
-rm(pw) # removes the password
-
-# check for the cartable
-dbExistsTable(con, "public")
-
-values <- paste( " jobdata[  , c(", 
-                 paste( names(jobdata),collapse=",") ,
-                 ")] ", collapse="" ) 
-
-cmd <- paste("insert into descr values ", values)
-
-result <- sqlQuery(con, cmd, as.is=TRUE)
-
-
-# df_postgres <- dbGetQuery(con, "SELECT * from jupem_point")
-
-queryBuilding <- paste('SELECT * from public') 
-
-buildingFootprint <- st_read(con, query = queryBuilding)
-
-dbListTables(con) 
-
-dbWriteTable(con, name="description", value=jobdata)
-
 # https://stackoverflow.com/questions/47543247/how-to-append-update-a-row-from-a-data-frame-to-a-table-in-postgresql-db-table-t
-dbWriteTable(con, "mytable", df, append = TRUE, row.names = FALSE)
-
-
-dbReadTable(con, 'job-description')
-
-dbSendQuery(connec, "INSERT INTO Employees VALUES(1,'Aakash')")
+dbWriteTable(con, "description", jobdata, append = TRUE, row.names = FALSE)
+ 
 
 
 fwrite(as.data.frame(jobdata), paste0("//10.13.10.22/dataSandbox/scraping/misc/jobstreet/jobstreet_jobdataraw_", date, ".csv"))
