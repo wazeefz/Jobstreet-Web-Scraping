@@ -11,9 +11,15 @@ date = gsub("-", "_", Sys.Date())
 
 url = "https://www.jobstreet.com.my/en/job-search/job-vacancy.php?sort=createdAt"
 
-driver = rsDriver(port = as.integer(sample(1000:10000, 1)), browser = "chrome", chromever = "106.0.5249.61")
+remDr <- RSelenium::remoteDriver(remoteServerAddr = "10.13.11.18",
+                                 port = 4445L,
+                                 browserName = "chrome")
+remDr$open()
 
-remDr = driver[["client"]]
+
+#driver = rsDriver(port = as.integer(sample(1000:10000, 1)), browser = "chrome", chromever = "106.0.5249.61")
+
+#remDr = driver[["client"]]
 
 remDr$navigate(url)
 
