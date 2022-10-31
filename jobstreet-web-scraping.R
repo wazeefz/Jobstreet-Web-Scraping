@@ -13,7 +13,7 @@ url = "https://www.jobstreet.com.my/en/job-search/job-vacancy.php?sort=createdAt
 
 remDr <- RSelenium::remoteDriver(remoteServerAddr = "10.13.11.18",
                                  port = 4445L,
-                                 browserName = "chrome")
+                                 browserName = "jobstreet")
 remDr$open()
 
 
