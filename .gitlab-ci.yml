@@ -6,7 +6,7 @@ pages:
   image: rocker/r-ver:4.2
   before_script:
     - apt-get update && apt-get install libpq5 libpq-dev default-jdk wget curl gnupg openjdk-8-jdk -y  
-    - Rscript -e 'install.packages(c("RSelenium","RPostgreSQL","dplyr"))'
+    - Rscript -e 'install.packages("pacman")'
 
   script:   
     # - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
