@@ -20,5 +20,7 @@ pages:
     CHROMEDRIVER_VERSION=$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION); \
     wget -q --continue -P $CHROMEDRIVER_DIR "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
   - unzip $CHROMEDRIVER_DIR/chromedriver* -d $CHROMEDRIVER_DIR
-
+  - export PATH="$CHROMEDRIVER_DIR:$PATH" 
   - Rscript jobstreet-web-scraping.R 
+
+
