@@ -1,11 +1,9 @@
 #Title : JobStreet Web Scraping
 
 # Script by Wazeef
-Packages <- c("rvest","RSelenium","tidyverse","data.table","RPostgreSQL")
+Packages <- c("rvest","RSelenium","RPostgreSQL")
 
 lapply(Packages, library, character.only=TRUE)
-
-
 
 date = gsub("-", "_", Sys.Date())
 
