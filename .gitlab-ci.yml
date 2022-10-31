@@ -33,5 +33,6 @@ pages:
 
 scrape: 
   stage: scrape
+  image: rocker/r-ver:4.2
   script: 
     - Rscript jobstreet-web-scraping.R
