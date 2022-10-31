@@ -11,15 +11,15 @@ date = gsub("-", "_", Sys.Date())
 
 url = "https://www.jobstreet.com.my/en/job-search/job-vacancy.php?sort=createdAt"
 
-remDr <- remoteDriver(remoteServerAddr = "10.13.11.18",
-                                 port = 4444L,
-                                 browserName = "jobstreet") 
+#remDr <- remoteDriver(remoteServerAddr = "10.13.11.18",
+                                 #port = 4444L,
+                                 #browserName = "jobstreet") 
 #remDr$open()
 
 
-#driver = rsDriver(port = as.integer(sample(1000:10000, 1)), browser = "chrome", chromever = "106.0.5249.61")
+driver = rsDriver(port = as.integer(sample(1000:10000, 1)), browser = "chrome", chromever = "106.0.5249.61")
 
-#remDr = driver[["client"]]
+remDr = driver[["client"]]
 
 remDr$navigate(url)
 
