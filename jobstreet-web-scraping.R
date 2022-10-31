@@ -3,7 +3,6 @@
 # Script by Wazeef
 Packages <- c("rvest","RSelenium","RPostgreSQL")
 
-install.packages('RPostgreSQL', dependencies=TRUE, repos='http://cran.rstudio.com/')
 install.packages(c("rvest","RSelenium","RPostgreSQL"))
 lapply(Packages, require, character.only = TRUE)
 
@@ -50,7 +49,7 @@ pw <- {
 }
 
 # loads the PostgreSQL driver
-drv <- dbDriver("PostgreSQL")
+drv <- RPostgreSQL::PostgreSQL()
 # creates a connection to the postgres database
 # note that "con" will be used later in each connection to the database
 con <- dbConnect(drv, dbname = "jobstreet",
