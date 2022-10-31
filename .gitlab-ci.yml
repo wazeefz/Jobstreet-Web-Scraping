@@ -5,7 +5,7 @@ pages:
   stage: deploy
   image: rocker/r-ver:4.2
   before_script:
-    - apt-get update && apt-get install libpq5 libpq-dev default-jdk -y  
+    - apt-get update && apt-get install libpq5 libpq-dev default-jdk wget curl gnupg openjdk-8-jdk -y  
     - Rscript -e 'install.packages(c("RSelenium","RPostgreSQL"))'
 
   script:   

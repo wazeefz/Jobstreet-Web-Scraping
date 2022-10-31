@@ -11,7 +11,7 @@ date = gsub("-", "_", Sys.Date())
 
 url = "https://www.jobstreet.com.my/en/job-search/job-vacancy.php?sort=createdAt"
 
-remDr <- RSelenium::remoteDriver(remoteServerAddr = "10.13.11.18",
+remDr <- remoteDriver(remoteServerAddr = "10.13.11.18",
                                  port = 4445L,
                                  browserName = "jobstreet")
 remDr$open()
