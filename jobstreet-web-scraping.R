@@ -13,7 +13,7 @@ url = "https://www.jobstreet.com.my/en/job-search/job-vacancy.php?sort=createdAt
 
 remDr <- remoteDriver(remoteServerAddr = "10.13.11.18",
                                  port = 4444L,
-                                 browserName = "jobstreet")
+                                 browserName = "jobstreet", browser = "chrome", chromever = "106.0.5249.61") 
 remDr$open()
 
 
