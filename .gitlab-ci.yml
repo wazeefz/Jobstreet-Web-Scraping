@@ -2,6 +2,6 @@ scrape:
   image: rocker/r-ver:4.2
   before_script:
     - apt-get update 
-    - Rscript -e "install.packages(c("rvest","RSelenium","tidyverse","data.table","RPostgreSQL"))"
+    - Rscript -e "install.packages("pacman")"
   script: 
     - Rscript jobstreet-cleaning.R
