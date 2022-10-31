@@ -4,4 +4,4 @@ scrape:
     - apt-get update 
     - Rscript -e "install.packages(\"pacman\")"
   script: 
-    - Rscript jobstreet-cleaning.R
+    - Rscript jobstreet-web-scraping.R
