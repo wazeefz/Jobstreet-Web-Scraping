@@ -3,6 +3,7 @@
 # Script by Wazeef
 Packages <- c("rvest","RSelenium","RPostgreSQL")
 
+install.packages(c("rvest","RSelenium","RPostgreSQL"))
 lapply(Packages, library, character.only=TRUE)
 
 date = gsub("-", "_", Sys.Date())
