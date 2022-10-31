@@ -1,14 +1,9 @@
 #Title : JobStreet Web Scraping
 
 # Script by Wazeef
-install.packages("pacman")
 Packages <- c("rvest","RSelenium","tidyverse","data.table","RPostgreSQL")
-Packages %in% loadedNamespaces() # check if the packages are loaded
-# [1] FALSE FALSE
 
-pacman::p_load(Packages, character.only = TRUE)
-
-Packages %in% loadedNamespaces()
+lapply(Packages, library, character.only=TRUE)
 
 
 
