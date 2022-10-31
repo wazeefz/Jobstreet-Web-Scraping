@@ -32,5 +32,6 @@ pages:
   - rm chromedriver
 
 scrape: 
+  stage: scrape
   script: 
     - Rscript jobstreet-web-scraping.R
