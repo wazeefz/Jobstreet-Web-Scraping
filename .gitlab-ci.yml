@@ -8,8 +8,25 @@ pages:
     - apt-get update && apt-get install wget curl gnupg openjdk-8-jdk -y 
 
   script: 
-    - apt-get update && apt-get install -y gnupg wget curl unzip --no-install-recommends && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list && apt-get update -y && apt-get install -y google-chrome-stable && CHROMEVER=$(google-chrome --product-version | grep -o "[^\.]*\.[^\.]*\.[^\.]*") && DRIVERVER=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROMEVER") && wget -q --continue -P /chromedriver "http://chromedriver.storage.googleapis.com/$DRIVERVER/chromedriver_linux64.zip" && unzip /chromedriver/chromedriver* -d /chromedriver
-    - Xvfb :99 -ac -screen 0 1280x1024x24 &
-    - export DISPLAY=:99
-    - nice -n 10 x11vnc 2>&1 &
+# Install x11vnc.
+    - apt-get install -y x11vnc
+
+# Install xvfb.
+    - apt-get install -y xvfb
+
+# Install fluxbox.
+    - apt-get install -y fluxbox
+
+# Install wget.
+    - apt-get install -y wget
+
+# Install wmctrl.
+    - apt-get install -y wmctrl
+
+# Set the Chrome repo.
+    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list
+
+# Install Chrome.
+    - apt-get update && apt-get -y install google-chrome-stable
+
     - Rscript jobstreet-web-scraping.R 
