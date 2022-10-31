@@ -1,7 +1,7 @@
 scrape:
   image: rocker/r-ver:4.2
   before_script:
-    - apt-get update 
-    - Rscript -e "install.packages(\"pacman\")"
+    - apt-get update && apt-get install oracle-java8-installer -y
+    - Rscript -e "install.packages(c(\"rvest\",\"RSelenium\",\"tidyverse\",\"data.table\",\"RPostgreSQL\"))"
   script: 
     - Rscript jobstreet-web-scraping.R
