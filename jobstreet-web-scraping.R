@@ -1,10 +1,8 @@
 #Title : JobStreet Web Scraping
 
 # Script by Wazeef
-Packages <- c("RSelenium","RPostgreSQL")
-
-install.packages('RPostgreSQL', dependencies=TRUE, repos='http://cran.rstudio.com/')
-install.packages(c("RSelenium"))
+Packages <- c("RSelenium","RPostgreSQL","dplyr") 
+install.packages(c("RSelenium","dplyr","RPostgreSQL"))
 lapply(Packages, require, character.only = TRUE)
 
 date = gsub("-", "_", Sys.Date())
