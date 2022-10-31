@@ -15,7 +15,7 @@ pages:
   - apt-get update && apt-get install -y google-chrome-stable 
       
 # Install ChromeDriver
-  - export $CHROMEDRIVER_DIR /chromedriver
+  - export $CHROMEDRIVER_DIR=/chromedriver
   - mkdir $CHROMEDRIVER_DIR
   - CHROME_VERSION=$(google-chrome --product-version | sed -ne 's/[^0-9]*\(\([0-9]\.\)\{0,4\}[0-9][^.]\).*/\1/p'); \
     CHROMEDRIVER_VERSION=$(curl https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION); \
