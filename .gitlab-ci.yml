@@ -5,7 +5,7 @@ pages:
   stage: deploy
   image: rocker/r-ver:4.2
   before_script:
-    - apt-get update && apt-get install openjdk-8-jdk -y 
+    - apt-get update && apt-get install wget gnupg openjdk-8-jdk -y 
 
   script:
   - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
