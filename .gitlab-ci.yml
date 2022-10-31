@@ -9,6 +9,6 @@ pages:
 
   script: 
   - wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-  - apt-get install ./google-chrome-stable_current_amd64.deb
+  - apt-get install ./google-chrome-stable_current_amd64.deb -y
 
   - Rscript jobstreet-web-scraping.R 
